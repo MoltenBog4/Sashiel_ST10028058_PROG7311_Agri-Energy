@@ -1,8 +1,47 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="p-5 mb-4 bg-light rounded-3 shadow-sm">
+    <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">Welcome to Agri-Energy Connect</h1>
+        <p class="col-md-8 fs-5">
+            This platform empowers farmers and green tech employees to collaborate in promoting sustainable agriculture and energy innovation.
+        </p>
+        <a class="btn btn-primary btn-lg" asp-action="About">Learn More</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row text-center mt-5">
+        <div class="col-md-4">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                    <h5 class="card-title">For Farmers</h5>
+                    <p class="card-text">Add your product listings with date, type, and image. View your farming history anytime.</p>
+                    <a asp-controller="Product" asp-action="Index" class="btn btn-outline-success">My Products</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                    <h5 class="card-title">For Employees</h5>
+                    <p class="card-text">Register new farmers, filter product records by type or date, and support clean energy adoption.</p>
+                    <a asp-controller="Employee" asp-action="ViewFarmers" class="btn btn-outline-info">View Farmers</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Secure Access</h5>
+                    <p class="card-text">All users must log in to access role-specific features. Your data is protected and validated.</p>
+                    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-dark">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -18,7 +18,7 @@ namespace Sashiel_ST10028058_PROG7311.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult About()
         {
             return View();
         }

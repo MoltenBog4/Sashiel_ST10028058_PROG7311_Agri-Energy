@@ -79,5 +79,11 @@ namespace Sashiel_ST10028058_PROG7311.Controllers
 
             return View("ViewProducts", await query.ToListAsync());
         }
+
+        public async Task<IActionResult> ViewFarmers()
+        {
+            var farmers = await _context.Farmers.ToListAsync();
+            return View(farmers);
+        }
     }
 }

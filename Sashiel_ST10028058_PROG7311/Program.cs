@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Sashiel_ST10028058_PROG7311.Data;
 using Sashiel_ST10028058_PROG7311.Models;
