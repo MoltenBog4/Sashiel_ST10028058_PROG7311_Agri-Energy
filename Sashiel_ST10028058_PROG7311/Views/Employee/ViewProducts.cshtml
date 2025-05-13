@@ -3,33 +3,70 @@
     ViewData["Title"] = "All Products";
 }
 
-<h2>All Farmers' Products</h2>
+<div class="container mt-4">
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">All Farmers' Products</h4>
+        </div>
+        <div class="card-body">
+            <p class="text-muted mb-3">
+                Use the filters below to narrow down the product list by <strong>type</strong> and <strong>production date</strong>.
+                Leave fields empty to show all products.
+            </p>
 
-<form asp-action="FilterProducts" method="post" class="mb-3">
-    <div class="row">
-        <div class="col-md-3">
-            <input name="type" class="form-control" placeholder="Product Type" />
-        </div>
-        <div class="col-md-3">
-            <input name="fromDate" type="date" class="form-control" />
-        </div>
-        <div class="col-md-3">
-            <input name="toDate" type="date" class="form-control" />
-        </div>
-        <div class="col-md-3">
-            <button type="submit" class="btn btn-primary w-100">Filter</button>
+            <form asp-action="FilterProducts" method="post" class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label for="type" class="form-label">Product Type</label>
+                    <input name="type" id="type" class="form-control" placeholder="e.g. Vegetables, Grains" />
+                </div>
+                <div class="col-md-3">
+                    <label for="fromDate" class="form-label">From Date</label>
+                    <input name="fromDate" id="fromDate" type="date" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label for="toDate" class="form-label">To Date</label>
+                    <input name="toDate" id="toDate" type="date" class="form-control" />
+                </div>
+                <div class="col-md-3 d-grid">
+                    <button type="submit" class="btn btn-success">Apply Filter</button>
+                </div>
+
+                <div class="col-md-12 text-end">
+                    <a asp-action="ViewProducts" class="btn btn-outline-secondary btn-sm mt-2">Clear Filter</a>
+                </div>
+            </form>
         </div>
     </div>
-</form>
 
-@foreach (var p in Model)
-{
-    <div style="margin-top:20px; padding:10px; border:1px solid #ccc;">
-        <strong>@p.Name</strong> - @p.Type - @p.ProductionDate.ToShortDateString()<br />
-        Farmer: <em>@p.Farmer?.Name</em> | Email: @p.Farmer?.Email<br />
-        @if (!string.IsNullOrEmpty(p.ImagePath))
-        {
-            <img src="@p.ImagePath" width="150" alt="Product Image" />
-        }
-    </div>
-}
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning text-center">No products found for the selected filters.</div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            @foreach (var p in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        @if (!string.IsNullOrEmpty(p.ImagePath))
+                        {
+                            <img src="@p.ImagePath" class="card-img-top" alt="Product Image" style="height: 200px; object-fit: cover;" />
+                        }
+                        <div class="card-body">
+                            <h5 class="card-title">@p.Name</h5>
+                            <p class="card-text mb-2">
+                                <strong>Type:</strong> @p.Type<br />
+                                <strong>Date:</strong> @p.ProductionDate.ToShortDateString()
+                            </p>
+                            <p class="text-muted small">
+                                <strong>Farmer:</strong> @p.Farmer?.Name<br />
+                                <strong>Email:</strong> @p.Farmer?.Email
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

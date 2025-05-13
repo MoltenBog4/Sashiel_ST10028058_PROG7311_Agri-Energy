@@ -3,22 +3,40 @@
     ViewData["Title"] = "All Farmers";
 }
 
-<h2>Registered Farmers</h2>
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var farmer in Model)
-        {
-            <tr>
-                <td>@farmer.Name</td>
-                <td>@farmer.Email</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+            <h4 class="mb-0">Registered Farmers</h4>
+        </div>
+        <div class="card-body p-4">
+            @if (!Model.Any())
+            {
+                <div class="alert alert-warning">
+                    No farmers are currently registered.
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var farmer in Model)
+                            {
+                                <tr>
+                                    <td>@farmer.Name</td>
+                                    <td>@farmer.Email</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>

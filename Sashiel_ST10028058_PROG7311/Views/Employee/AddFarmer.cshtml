@@ -3,34 +3,53 @@
     ViewData["Title"] = "Add Farmer";
 }
 
-<h2>Create New Farmer</h2>
+<h2 class="mb-4 text-center">Create New Farmer Account</h2>
 
-<form asp-action="AddFarmer" method="post">
-    <div>
-        <label asp-for="FullName"></label>
-        <input asp-for="FullName" class="form-control" />
-        <span asp-validation-for="FullName" class="text-danger"></span>
-    </div>
-    <div>
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-    <div>
-        <label asp-for="Password"></label>
-        <input asp-for="Password" type="password" class="form-control" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-success mt-2">Create Farmer</button>
-</form>
+<p class="text-center text-muted mb-4">
+    Fill in the details below to create a new Farmer login. The farmer will be able to access the system with the provided email and password.
+</p>
 
-@if (TempData["Success"] != null)
-{
-    <p class="text-success mt-3">@TempData["Success"]</p>
-}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form asp-action="AddFarmer" method="post">
+                        <div class="mb-3">
+                            <label asp-for="FullName" class="form-label"></label>
+                            <input asp-for="FullName" class="form-control" placeholder="e.g. John Smith" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label"></label>
+                            <input asp-for="Email" class="form-control" placeholder="e.g. farmer@email.com" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Password" class="form-label"></label>
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Choose a password" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">Create Farmer</button>
+                    </form>
+
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert alert-success mt-3">
+                            @TempData["Success"]
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <partial name="_ValidationScriptsPartial" />
 }
