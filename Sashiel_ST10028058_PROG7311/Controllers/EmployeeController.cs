@@ -85,5 +85,81 @@ namespace Sashiel_ST10028058_PROG7311.Controllers
             var farmers = await _context.Farmers.ToListAsync();
             return View(farmers);
         }
+
+        // GET: EditFarmer
+        public async Task<IActionResult> EditFarmer(int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var farmer = await _context.Farmers.FindAsync(id);
+            if (farmer == null)
+                return NotFound();
+
+            return View(farmer);
+        }
+
+        // POST: EditFarmer
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditFarmer(int id, Farmer updated)
+        {
+            if (id != updated.Id)
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return View(updated);
+
+            try
+            {
+                var farmer = await _context.Farmers.FindAsync(id);
+                if (farmer == null)
+                    return NotFound();
+
+                farmer.Name = updated.Name;
+                farmer.Email = updated.Email;
+
+                _context.Update(farmer);
+                await _context.SaveChangesAsync();
+
+                TempData["Success"] = "Farmer updated successfully.";
+                return RedirectToAction(nameof(ViewFarmers));
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return Problem("Update failed due to concurrency issue.");
+            }
+        }
+
+
+        // GET: DeleteFarmer
+        public async Task<IActionResult> DeleteFarmer(int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var farmer = await _context.Farmers.FirstOrDefaultAsync(f => f.Id == id);
+            if (farmer == null)
+                return NotFound();
+
+            return View(farmer);
+        }
+
+        // POST: DeleteFarmerConfirmed
+        [HttpPost, ActionName("DeleteFarmer")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteFarmerConfirmed(int id)
+        {
+            var farmer = await _context.Farmers.FindAsync(id);
+            if (farmer == null)
+                return NotFound();
+
+            _context.Farmers.Remove(farmer);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Farmer deleted successfully.";
+            return RedirectToAction(nameof(ViewFarmers));
+        }
+
     }
 }

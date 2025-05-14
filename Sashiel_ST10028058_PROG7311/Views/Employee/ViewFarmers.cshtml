@@ -4,39 +4,33 @@
 }
 
 <div class="container mt-4">
-    <div class="card shadow-sm">
-        <div class="card-header bg-success text-white">
-            <h4 class="mb-0">Registered Farmers</h4>
-        </div>
-        <div class="card-body p-4">
-            @if (!Model.Any())
+    <h2 class="mb-3">Registered Farmers</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th style="width: 150px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var farmer in Model)
             {
-                <div class="alert alert-warning">
-                    No farmers are currently registered.
-                </div>
+                <tr>
+                    <td>@farmer.Name</td>
+                    <td>@farmer.Email</td>
+                    <td>
+                        <a asp-action="EditFarmer" asp-route-id="@farmer.Id" class="btn btn-sm btn-warning">Edit</a>
+                        <a asp-action="DeleteFarmer" asp-route-id="@farmer.Id" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
             }
-            else
-            {
-                <div class="table-responsive">
-                    <table class="table table-hover table-bordered align-middle">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var farmer in Model)
-                            {
-                                <tr>
-                                    <td>@farmer.Name</td>
-                                    <td>@farmer.Email</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            }
-        </div>
-    </div>
+        </tbody>
+    </table>
 </div>
