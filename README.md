@@ -120,7 +120,7 @@
 
 ## 🎥 8. Demo Video
 
-📺 Full walkthrough (to be added):
+📺 Full walkthrough:https://youtu.be/BaTZGf8jE8Y
 
 Includes:
 - Login and registration
