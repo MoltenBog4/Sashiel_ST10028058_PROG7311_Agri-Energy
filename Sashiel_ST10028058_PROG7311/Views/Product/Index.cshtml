@@ -24,12 +24,16 @@
                         {
                             <img src="@product.ImagePath" class="card-img-top" alt="Product Image" style="height: 200px; object-fit: cover;" />
                         }
-                        <div class="card-body">
+                        <div class="card-body d-flex flex-column">
                             <h5 class="card-title">@product.Name</h5>
-                            <p class="card-text">
+                            <p class="card-text mb-3">
                                 <strong>Type:</strong> @product.Type<br />
                                 <strong>Date:</strong> @product.ProductionDate.ToShortDateString()
                             </p>
+                            <div class="mt-auto d-flex justify-content-between">
+                                <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-sm btn-warning">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn-sm btn-danger">Delete</a>
+                            </div>
                         </div>
                     </div>
                 </div>
