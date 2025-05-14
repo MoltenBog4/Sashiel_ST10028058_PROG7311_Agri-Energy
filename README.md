@@ -162,42 +162,54 @@ Includes:
 
 ---
 
-## ⚙️ 12. Developer Setup Guide
+⚙️ 12. Developer Setup Guide
+📦 Requirements
+Visual Studio 2022+
 
-### 📦 Requirements
-- Visual Studio 2022+
-- .NET 8.0 SDK+
-- SQL Server + SSMS v20+
+.NET 8.0 SDK+
 
-### 🔄 Setup Workflow
+SQL Server + SSMS v20+
 
-1. **Clone or Extract**
-   - Open the `.sln` file in Visual Studio
+🔄 Setup Workflow
+1. Clone or Extract the Repository
+Open the .sln file in Visual Studio
 
-2. **Install Packages**
-Tools > NuGet Package Manager > Package Manager Console
+2. Install Dependencies
+In Package Manager Console:
+
+bash
+Copy
+Edit
 Update-Package -reinstall
-3. **Configure Connection String**
-In `appsettings.json`:
-```json
-"ConnectionStrings": {
-  "DefaultConnection": "Server=localhost\\SQLEXPRESS;Database=AgriEnergyDB;Trusted_Connection=True;"
-}
-Apply EF Migrations
+3. Configure Connection String
+In appsettings.json:
 
-pgsql
+json
+Copy
+Edit
+ "ConnectionStrings": {
+   "DefaultConnection": "Server=SASHIEL-PC;Database=ST10028058_Agri-Energy;Trusted_Connection=True;TrustServerCertificate=True;"
+4. Apply EF Core Migrations
+In Package Manager Console:
+
+bash
 Copy
 Edit
 Update-Database
-Run the Application
+5. Run the Application
+Press Ctrl + F5
 
-Press Ctrl + F5 or click Start in Visual Studio
+Or click the green Start button in Visual Studio
 
-Test Functionality
+6. Test Functionality
+✅ Use the seeded credentials
 
-Use the seeded credentials
+✅ Log in as Employee or Farmer
 
-Try farmer and employee dashboards
+✅ Add, edit, or delete products (Farmer)
 
-Verify product filtering and role-based access
+✅ View and filter products (Employee)
 
+✅ Manage farmer records (Employee)
+
+✅ Ensure role-based access is enforced
