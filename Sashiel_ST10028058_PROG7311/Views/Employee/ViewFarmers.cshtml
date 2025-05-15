@@ -28,6 +28,9 @@
                     <td>
                         <a asp-action="EditFarmer" asp-route-id="@farmer.Id" class="btn btn-sm btn-warning">Edit</a>
                         <a asp-action="DeleteFarmer" asp-route-id="@farmer.Id" class="btn btn-sm btn-danger">Delete</a>
+                        <a asp-action="ViewFarmerProducts" asp-route-id="@farmer.Id" class="btn btn-sm btn-outline-primary">
+                            View Products
+                        </a>
                     </td>
                 </tr>
             }

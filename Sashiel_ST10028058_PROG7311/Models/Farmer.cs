@@ -7,6 +7,8 @@
         public string Email{ get; set; }
         public string UserId { get; set; }
 
+        public ICollection<Product> Products { get; set; } = new List<Product>();
+
     }
 }
 //# Assistance provided by ChatGPT

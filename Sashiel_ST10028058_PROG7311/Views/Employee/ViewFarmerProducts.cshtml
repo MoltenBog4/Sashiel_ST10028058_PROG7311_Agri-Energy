@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Sashiel_ST10028058_PROG7311.Models.Product>
+@{
+    ViewData["Title"] = "Farmer's Products";
+    var name = ViewBag.FarmerName as string;
+    var email = ViewBag.FarmerEmail as string;
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-info text-white">
+            <h4 class="mb-0">Products by @name</h4>
+            <p class="small mb-0">Email: @email</p>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning text-center">No products available for this farmer.</div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            @foreach (var product in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        @if (!string.IsNullOrEmpty(product.ImagePath))
+                        {
+                            <img src="@product.ImagePath" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Product Image" />
+                        }
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">
+                                <strong>Type:</strong> @product.Type<br />
+                                <strong>Date:</strong> @product.ProductionDate.ToShortDateString()
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

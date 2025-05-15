@@ -63,6 +63,23 @@ namespace Sashiel_ST10028058_PROG7311.Controllers
             return View(products);
         }
 
+        // GET: View products of a specific farmer
+        public async Task<IActionResult> ViewFarmerProducts(int id)
+        {
+            var farmer = await _context.Farmers
+                .Include(f => f.Products)
+                .FirstOrDefaultAsync(f => f.Id == id);
+
+            if (farmer == null)
+                return NotFound();
+
+            ViewBag.FarmerName = farmer.Name;
+            ViewBag.FarmerEmail = farmer.Email;
+
+            return View(farmer.Products);
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> FilterProducts(string type, DateTime? fromDate, DateTime? toDate)
         {
