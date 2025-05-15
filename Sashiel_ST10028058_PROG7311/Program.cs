@@ -5,9 +5,9 @@ using Sashiel_ST10028058_PROG7311.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -16,14 +16,13 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
 })
-    .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// ✅ Seed roles, users, farmers, and products
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -32,7 +31,6 @@ using (var scope = app.Services.CreateScope())
     var db = services.GetRequiredService<ApplicationDbContext>();
 
     string[] roles = { "Farmer", "Employee" };
-
     foreach (var role in roles)
     {
         if (!await roleManager.RoleExistsAsync(role))
@@ -42,7 +40,7 @@ using (var scope = app.Services.CreateScope())
         }
     }
 
-    // Seed Employee 1
+    // Employee 1
     var employeeEmail = "employee@email.com";
     var employeePassword = "Pa$$w0rd!";
     var employeeUser = await userManager.FindByEmailAsync(employeeEmail);
@@ -54,7 +52,7 @@ using (var scope = app.Services.CreateScope())
         Console.WriteLine("✅ First employee account seeded.");
     }
 
-    // Seed Employee 2
+    // Employee 2
     var employeeEmail2 = "employee2@email.com";
     var employeeUser2 = await userManager.FindByEmailAsync(employeeEmail2);
     if (employeeUser2 == null)
@@ -65,7 +63,7 @@ using (var scope = app.Services.CreateScope())
         Console.WriteLine("✅ Second employee account seeded.");
     }
 
-    // Seed Farmer 1
+    // Farmer 1
     var farmerEmail = "farmer@email.com";
     var farmerPassword = "Pa$$w0rd!";
     var farmerUser = await userManager.FindByEmailAsync(farmerEmail);
@@ -93,28 +91,34 @@ using (var scope = app.Services.CreateScope())
         seededFarmer = db.Farmers.FirstOrDefault(f => f.Email == farmerEmail);
     }
 
-    // Seed Farmer 2
+    // Farmer 2
     var farmerEmail2 = "farmerbrown@email.com";
     var farmerUser2 = await userManager.FindByEmailAsync(farmerEmail2);
+    Farmer? farmerBrown = null;
+
     if (farmerUser2 == null)
     {
         var newFarmerUser2 = new IdentityUser { UserName = farmerEmail2, Email = farmerEmail2 };
         await userManager.CreateAsync(newFarmerUser2, farmerPassword);
         await userManager.AddToRoleAsync(newFarmerUser2, "Farmer");
 
-        var farmerEntity2 = new Farmer
+        farmerBrown = new Farmer
         {
             Name = "Farmer Brown",
             Email = farmerEmail2,
             UserId = newFarmerUser2.Id
         };
 
-        db.Farmers.Add(farmerEntity2);
+        db.Farmers.Add(farmerBrown);
         await db.SaveChangesAsync();
         Console.WriteLine("✅ Second farmer account and profile seeded.");
     }
+    else
+    {
+        farmerBrown = db.Farmers.FirstOrDefault(f => f.Email == farmerEmail2);
+    }
 
-    // ✅ Always remove and reseed products for first farmer
+    // Seed products for Farmer 1
     if (seededFarmer != null)
     {
         var existingProducts = db.Products.Where(p => p.FarmerId == seededFarmer.Id);
@@ -149,7 +153,45 @@ using (var scope = app.Services.CreateScope())
         );
 
         await db.SaveChangesAsync();
-        Console.WriteLine("✅ Products seeded for first farmer.");
+        Console.WriteLine("✅ Products seeded for Test Farmer.");
+    }
+
+    // Seed products for Farmer Brown
+    if (farmerBrown != null)
+    {
+        var existingProducts = db.Products.Where(p => p.FarmerId == farmerBrown.Id);
+        db.Products.RemoveRange(existingProducts);
+        await db.SaveChangesAsync();
+
+        db.Products.AddRange(
+            new Product
+            {
+                Name = "Juicy Tomatoes",
+                Type = "Fruits",
+                ProductionDate = new DateTime(2024, 10, 1),
+                ImagePath = "/images/products/tomatoes.jpg",
+                FarmerId = farmerBrown.Id
+            },
+            new Product
+            {
+                Name = "Baby Spinach",
+                Type = "Vegetables",
+                ProductionDate = new DateTime(2024, 9, 15),
+                ImagePath = "/images/products/spinach.jpg",
+                FarmerId = farmerBrown.Id
+            },
+            new Product
+            {
+                Name = "Butternut Squash",
+                Type = "Vegetables",
+                ProductionDate = new DateTime(2024, 8, 25),
+                ImagePath = "/images/products/butternut.jpg",
+                FarmerId = farmerBrown.Id
+            }
+        );
+
+        await db.SaveChangesAsync();
+        Console.WriteLine("✅ Products seeded for Farmer Brown.");
     }
 }
 
@@ -165,9 +207,7 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -179,7 +219,7 @@ app.MapRazorPages();
 app.Run();
 
 
- //# Assistance provided by ChatGPT
+//# Assistance provided by ChatGPT
 //# Code and support generated with the help of OpenAI's ChatGPT.
 // code attribution
 // W3schools
