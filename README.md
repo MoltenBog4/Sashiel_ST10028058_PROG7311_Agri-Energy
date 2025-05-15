@@ -4,7 +4,7 @@
 **Student Number:** ST10028058  
 **Module:** PROG7311 — Programming 3A  
 **Part 2:** Functional Web Application Development  
-
+Video Link:https://youtu.be/ekTb2fL7brk
 ---
 
 ## 🌍 1. Project Overview
@@ -120,7 +120,7 @@
 
 ## 🎥 8. Demo Video
 
-📺 Full walkthrough:https://youtu.be/BaTZGf8jE8Y
+📺 Full walkthrough:https:[//youtu.be/BaTZGf8jE8Y](https://youtu.be/ekTb2fL7brk)
 
 Includes:
 - Login and registration
